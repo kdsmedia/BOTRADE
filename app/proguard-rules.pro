@@ -1,21 +1,30 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# BOTRADE ProGuard rules
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes SourceFile,LineNumberTable
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Retrofit 2
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+-dontwarn retrofit2.**
+-dontwarn okhttp3.**
+-dontwarn okio..
+-keep class com.altomedia.botrade.model.** { *; }
+-keep class com.altomedia.botrade.retrofit.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Gson
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.** { *; }
+
+# ButterKnife 10
+-keep class butterknife.** { *; }
+-dontwarn butterknife.compiler.**
+-dontwarn butterknife.**
+
+# QRCodeReaderView
+-keep class com.dlazaro66.qrcodereaderview.** { *; }
+-dontwarn com.dlazaro66.qrcodereaderview.**

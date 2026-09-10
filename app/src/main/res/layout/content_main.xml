@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.robotrader.ebinjoy999.robotrader.MainActivity">
+    tools:context="com.altomedia.botrade.MainActivity">
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
@@ -31,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Active orders - no updates-" />
-<android.support.v7.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
     android:layout_below="@+id/textViewOrder"
     android:id="@+id/recyclerViewActiveOrders"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 
     <RelativeLayout
@@ -56,10 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Wallet - no updates-" />
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/textViewUpdatedWallettime"
         android:id="@+id/recyclerViewWalletBalance"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 </LinearLayout>
