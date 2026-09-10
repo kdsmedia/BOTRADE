@@ -42,28 +42,33 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.altomedia.botrade.exchange.CustomDialogClass;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.switchEnableTrade) SwitchCompat switchEnableTrade;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fab) FloatingActionButton fab;
-    @BindView(R.id.spinner) Spinner spinnerExchange;
-    @BindView(R.id.recyclerViewActiveOrders) RecyclerView recyclerViewActiveOrders;
-    @BindView(R.id.recyclerViewWalletBalance) RecyclerView recyclerViewWalletBalance;
-    @BindView(R.id.textViewUpdatedWallettime) TextView textViewUpdatedWallettime;
-    @BindView(R.id.textViewOrder) TextView textViewOrder;
+    SwitchCompat switchEnableTrade;
+    Toolbar toolbar;
+    FloatingActionButton fab;
+    Spinner spinnerExchange;
+    RecyclerView recyclerViewActiveOrders;
+    RecyclerView recyclerViewWalletBalance;
+    TextView textViewUpdatedWallettime;
+    TextView textViewOrder;
     Intent intent;
     TraderReceiver traderReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
-
+        switchEnableTrade = findViewById(R.id.switchEnableTrade);
+        toolbar = findViewById(R.id.toolbar);
+        fab = findViewById(R.id.fab);
+        spinnerExchange = findViewById(R.id.spinner);
+        recyclerViewActiveOrders = findViewById(R.id.recyclerViewActiveOrders);
+        recyclerViewWalletBalance = findViewById(R.id.recyclerViewWalletBalance);
+        textViewUpdatedWallettime = findViewById(R.id.textViewUpdatedWallettime);
+        textViewOrder = findViewById(R.id.textViewOrder);
+        
         traderReceiver = new TraderReceiver();
 
         IntentFilter intentFilter1 = new IntentFilter();

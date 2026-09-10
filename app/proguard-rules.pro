@@ -21,9 +21,6 @@
 -keep class com.google.gson.** { *; }
 
 # ButterKnife 10
--keep class butterknife.** { *; }
--dontwarn butterknife.compiler.**
--dontwarn butterknife.**
 
 # QRCodeReaderView
 -keep class com.dlazaro66.qrcodereaderview.** { *; }

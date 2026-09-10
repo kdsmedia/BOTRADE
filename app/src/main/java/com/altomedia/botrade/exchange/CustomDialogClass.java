@@ -94,20 +94,16 @@ public class CustomDialogClass  extends Dialog implements
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_yes:
-                dismiss();
-                break;
-            case R.id.buttonRemove:
-                sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_user,"");
-                sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_pass,"");
-                textViewHint.setText("(no API details available) Scan new QR code");
-                buttonRemove.setVisibility(View.INVISIBLE);
+        int id = v.getId();
+        if (id == R.id.btn_yes) {
+            dismiss();
+        } else if (id == R.id.buttonRemove) {
+            sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_user,"");
+            sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_pass,"");
+            textViewHint.setText("(no API details available) Scan new QR code");
+            buttonRemove.setVisibility(View.INVISIBLE);
 
-                if(qrCodeReaderView!=null)  qrCodeReaderView.startCamera(); else setUpQRReader();
-                break;
-            default:
-                break;
+            if(qrCodeReaderView!=null)  qrCodeReaderView.startCamera(); else setUpQRReader();
         }
 //        dismiss();
     }
