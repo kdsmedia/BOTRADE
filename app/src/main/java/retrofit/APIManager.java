@@ -12,6 +12,12 @@ import retrofit2.Callback;
 public class APIManager<TClassResponse,TClass>  {
 
     public static final String KEY_REQUEST_QUERY_PARAMS = "keyQuery_Params";
+    public static final String KEY_REQUEST_SYMBOL = "symbol";
+    public static final String KEY_REQUEST_AMOUNT = "amount";
+    public static final String KEY_REQUEST_PRICE = "price";
+    public static final String KEY_REQUEST_SIDE = "side";
+    public static final String KEY_REQUEST_TYPE = "type";
+    public static final String KEY_REQUEST_EXCHANGE = "exchange";
     InterfaceAPIManager interfaceAPIManager;
 Context ct;
 ApiInterface apiService;
@@ -77,8 +83,13 @@ public APIManager(TClass classCallBack, Context ct){
                 apiService = ApiClient.getClient(ct, true, null).create(ApiInterface.class);
                 return  (Call<TClassResponse>) apiService.postCancelAllOrder();
             case REQUEST_NEW_ORDER:
-                apiService = ApiClient.getClient(ct, true, null).create(ApiInterface.class);
-                return  (Call<TClassResponse>) apiService.postNewOrder();
+                apiService = ApiClient.getClient(ct, true, "/v1/order/new").create(ApiInterface.class);
+                return  (Call<TClassResponse>) apiService.postNewOrder((String) params.get(KEY_REQUEST_SYMBOL),
+                        (String) params.get(KEY_REQUEST_AMOUNT),
+                        (String) params.get(KEY_REQUEST_PRICE),
+                        (String) params.get(KEY_REQUEST_SIDE),
+                        (String) params.get(KEY_REQUEST_TYPE),
+                        (String) params.get(KEY_REQUEST_EXCHANGE));
         }
         return null;
     }

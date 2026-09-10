@@ -9,6 +9,8 @@ import com.robotrader.ebinjoy999.robotrader.model.neworder.ResponseOnNewOrder;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -30,8 +32,14 @@ public interface ApiInterface {
     @POST("v1/balances")
     Call<List<WalletItem>> getWalletBalences();
 
-    @POST("/v1/order/new")
-    Call<ResponseOnNewOrder> postNewOrder();
+    @FormUrlEncoded
+    @POST("v1/order/new")
+    Call<ResponseOnNewOrder> postNewOrder(@Field("symbol") String symbol,
+                                            @Field("amount") String amount,
+                                            @Field("price") String price,
+                                            @Field("side") String side,
+                                            @Field("type") String type,
+                                            @Field("exchange") String exchange);
 
     @POST("v1/order/cancel/multi")
     Call<ResponseOnNewOrder> postCancelOrder();
