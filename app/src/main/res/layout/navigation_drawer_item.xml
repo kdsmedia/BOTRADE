@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="4dp"
+    android:weightSum="5"
+
+   >
+
+    <TextView
+        android:lines="1"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColor="@color/text_secondary_dark"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewPair"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pair(USD)" />
+
+    <TextView
+        android:lines="1"
+        android:gravity="center"
+          android:textColor="@color/text_secondary_dark"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewBid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Bid" />
+
+    <TextView
+        android:lines="1"
+        android:gravity="center"
+        android:textColor="@color/text_green"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewPercentage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="%" />
+
+    <TextView
+        android:lines="1"
+        android:visibility="gone"
+        android:gravity="center"
+          android:textColor="@color/text_secondary_dark"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewVolume"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volume" />
+
+    <TextView
+        android:lines="1"
+        android:gravity="center"
+          android:textColor="@color/text_secondary_dark"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewHigh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="High" />
+
+    <TextView
+        android:lines="1"
+        android:gravity="center"
+          android:textColor="@color/text_secondary_dark"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:id="@+id/textViewLow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Low" />
+
+
+</LinearLayout>
