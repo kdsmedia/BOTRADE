@@ -6,7 +6,11 @@
 
     <string name="action_settings">Settings</string>
 
-
+    <string name="close">Close</string>
+    <string name="remove">Remove</string>
+    <string name="scan_qr_hint_default">(no API details available) Scan new QR code</string>
+    <string name="scan_qr_permission_hint">Ensure the camera permission has been granted to this app in settings.</string>
+    <string name="added_one_key">Added one key</string>
 
     <string-array name="providers">
         <item>Select Exchange</item>

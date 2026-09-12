@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Rounded frame that acts as the camera viewfinder area -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#1A3F51B5" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorPrimary" />
+    <corners android:radius="16dp" />
+</shape>

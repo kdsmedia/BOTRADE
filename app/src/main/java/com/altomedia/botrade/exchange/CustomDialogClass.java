@@ -32,6 +32,7 @@ public class CustomDialogClass  extends Dialog implements
 
     TextView textViewHint,txtTitle;
     Button buttonRemove;
+    android.widget.ImageView btnClose;
 
     SharedPreferenceManagerC sharedPreferenceManagerC;
     public CustomDialogClass(Activity a) {
@@ -46,14 +47,31 @@ public class CustomDialogClass  extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.custom_dialog);
+
+        // Transparent window background so the rounded card drawable is visible.
+        Window window = getWindow();
+        if (window != null) {
+            window.setBackgroundDrawableResource(android.R.color.transparent);
+            android.view.WindowManager.LayoutParams lp = window.getAttributes();
+            lp.width = (int) (contextActiviyt.getResources().getDisplayMetrics().widthPixels * 0.92f);
+            window.setAttributes(lp);
+        }
+
         sharedPreferenceManagerC = new SharedPreferenceManagerC(contextActiviyt);
 
         yes = (Button) findViewById(R.id.btn_yes);
         buttonRemove = (Button) findViewById(R.id.buttonRemove);
+        btnClose = findViewById(R.id.btnClose);
         textViewHint = (TextView) findViewById(R.id.textViewHint);
         txtTitle = findViewById(R.id.txtTitle);
         yes.setOnClickListener(this);
         buttonRemove.setOnClickListener(this);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
         setUpView();
 
@@ -66,9 +84,10 @@ public class CustomDialogClass  extends Dialog implements
         if( user.equalsIgnoreCase("")  || key.equalsIgnoreCase("")  ){
             setUpQRReader();
             buttonRemove.setVisibility(View.INVISIBLE);
+            textViewHint.setText(R.string.scan_qr_hint_default);
         }else {
             buttonRemove.setVisibility(View.VISIBLE);
-            textViewHint.setText("Added one key");
+            textViewHint.setText(R.string.added_one_key);
 
         }
 
@@ -108,7 +127,7 @@ public class CustomDialogClass  extends Dialog implements
         } else if (id == R.id.buttonRemove) {
             sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_user,"");
             sharedPreferenceManagerC.saveKeyToSharedPreferencString(KEY_pass,"");
-            textViewHint.setText("(no API details available) Scan new QR code");
+            textViewHint.setText(R.string.scan_qr_hint_default);
             buttonRemove.setVisibility(View.INVISIBLE);
 
             if(qrCodeReaderView!=null)  qrCodeReaderView.startCamera(); else setUpQRReader();
@@ -136,7 +155,7 @@ public class CustomDialogClass  extends Dialog implements
 
               if(qrCodeReaderView!=null)  qrCodeReaderView.stopCamera();
                buttonRemove.setVisibility(View.VISIBLE);
-               textViewHint.setText("Added one key");
+               textViewHint.setText(R.string.added_one_key);
 
            }
 
