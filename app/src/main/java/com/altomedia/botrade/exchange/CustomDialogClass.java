@@ -1,13 +1,17 @@
 package com.altomedia.botrade.exchange;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.altomedia.botrade.R;
@@ -72,6 +76,10 @@ public class CustomDialogClass  extends Dialog implements
     }
 
     private void setUpQRReader() {
+        if (ContextCompat.checkSelfPermission(contextActiviyt, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         qrCodeReaderView = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
         qrCodeReaderView.setOnQRCodeReadListener(CustomDialogClass.this);
         qrCodeReaderView.setVisibility(View.VISIBLE);

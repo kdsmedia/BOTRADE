@@ -170,12 +170,13 @@ public class MarketTickerWatcher implements InterfaceAPIManager{
                if( (jsonResult instanceof List) && ((List<Object>) jsonResult).size()> 0 && ((List<ArrayList>) jsonResult).get(0) instanceof List) {
                   symbolDetails = new HashMap<>();
                    for(ArrayList arrayListDetail :  ((List<ArrayList>) jsonResult)){
-                       if(arrayListDetail.get(0).toString().contains("USD"))
-                       symbolDetails.put(arrayListDetail.get(0).toString(),new SymbolDetails(arrayListDetail.get(0).toString(),
-                               Float.parseFloat(arrayListDetail.get(1).toString()),Float.parseFloat(arrayListDetail.get(2).toString()),Float.parseFloat(arrayListDetail.get(3).toString()),
-                               Float.parseFloat(arrayListDetail.get(4).toString()),Float.parseFloat(arrayListDetail.get(5).toString()),Float.parseFloat(arrayListDetail.get(6).toString()),
-                               Float.parseFloat(arrayListDetail.get(7).toString()),Float.parseFloat(arrayListDetail.get(8).toString()),Float.parseFloat(arrayListDetail.get(9).toString()),
-                               Float.parseFloat(arrayListDetail.get(10).toString())) );
+                       if(arrayListDetail.get(0).toString().contains("USD")) {
+                           symbolDetails.put(arrayListDetail.get(0).toString(), new SymbolDetails(arrayListDetail.get(0).toString(),
+                                   Float.parseFloat(arrayListDetail.get(1).toString()), Float.parseFloat(arrayListDetail.get(2).toString()), Float.parseFloat(arrayListDetail.get(3).toString()),
+                                   Float.parseFloat(arrayListDetail.get(4).toString()), Float.parseFloat(arrayListDetail.get(5).toString()), Float.parseFloat(arrayListDetail.get(6).toString()),
+                                   Float.parseFloat(arrayListDetail.get(7).toString()), Float.parseFloat(arrayListDetail.get(8).toString()), Float.parseFloat(arrayListDetail.get(9).toString()),
+                                   Float.parseFloat(arrayListDetail.get(10).toString())));
+                       }
                    }
                    sentBrodcast(symbolDetails, MainActivity.TRADE_RECEIVER_PRICE,KEY_SYMBOL_DETAILS);
                    addToResponse(APIManager.REQUEST_GET_TICKERS,symbolDetails);

@@ -1,11 +1,16 @@
 package com.altomedia.botrade;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.altomedia.botrade.adapter.AdapterActiveOrder;
 import com.altomedia.botrade.adapter.AdapterRoboLogs;
@@ -78,16 +84,18 @@ public class MainActivity extends AppCompatActivity
         intentFilter.addAction(MainActivity.TRADE_RECEIVER_PRICE);
 
         IntentFilter intentFilter2 = new IntentFilter();
-        intentFilter.addAction(MainActivity.TRADE_WALLET_PRICE);
+        intentFilter2.addAction(MainActivity.TRADE_WALLET_PRICE);
 
         IntentFilter intentFilter3 = new IntentFilter();
-        intentFilter.addAction(MainActivity.TRADE_ACTIVE_ORDERS);
+        intentFilter3.addAction(MainActivity.TRADE_ACTIVE_ORDERS);
 
-        registerReceiver(traderReceiver, intentFilter3);
-        registerReceiver(traderReceiver, intentFilter2);
-        registerReceiver(traderReceiver, intentFilter1);
-        registerReceiver(traderReceiver, intentFilter);
+        registerCustomReceiver(traderReceiver, intentFilter3);
+        registerCustomReceiver(traderReceiver, intentFilter2);
+        registerCustomReceiver(traderReceiver, intentFilter1);
+        registerCustomReceiver(traderReceiver, intentFilter);
 
+        requestCameraPermission();
+        requestNotificationPermission();
 
         intent = new Intent(this, TraderMainService.class);
         setSupportActionBar(toolbar);
@@ -103,6 +111,60 @@ public class MainActivity extends AppCompatActivity
         setListners();
         setUpBottumSheetLog();
         setUpMainView();
+    }
+
+    private void registerCustomReceiver(BroadcastReceiver receiver, IntentFilter filter) {
+        if (Build.VERSION.SDK_INT >= 33) {
+            // Required on Android 13+ (targetSdk 33+): the app must declare whether a
+            // dynamically registered receiver is exported. SecurityException otherwise.
+            registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            registerReceiver(receiver, filter);
+        }
+    }
+
+    private static final int REQUEST_CAMERA_PERMISSION = 100;
+
+    private void requestCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+    }
+
+    private void requestNotificationPermission() {
+        // Android 13+ requires runtime permission to post notifications.
+        if (Build.VERSION.SDK_INT >= 33
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_CAMERA_PERMISSION + 1);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION
+                && grantResults.length > 0
+                && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,
+                    "Camera permission is needed to scan exchange API keys via QR code.",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (traderReceiver != null) {
+            try {
+                unregisterReceiver(traderReceiver);
+            } catch (IllegalArgumentException ignored) {
+                // Receiver was not registered.
+            }
+        }
     }
 
     AdapterWalletBalance adapterWalletBalance;
