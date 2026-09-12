@@ -5,6 +5,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.altomedia.botrade.CustomSharedPreference;
+import com.altomedia.botrade.tools.SharedPreferenceManagerC;
 
 import org.json.JSONObject;
 
@@ -57,9 +58,20 @@ public class ApiClient {
 
 
                 final String ALGORITHM_HMACSHA384 = "HmacSHA384";
-                 String apiKey = "kBZAnQY7cTDc1QuGtx7xmt0AFWoXsKhVQzV7HoZ5l2e";
-                 String apiKeySecret = "046uT0oKewxgorJoRXLB3iSxYze1BMsXitdhzl9YS5W";
-                 long nonce = System.currentTimeMillis();
+
+                // Default credentials bundled with the app (used when the user has not
+                // scanned a QR code yet). A QR-scanned key overrides these.
+                String apiKey = "5ff4d2450acd5e74e586495cdd0581fbe624dce01f9";
+                String apiKeySecret = "fe12a5fcc14c1dcf5df5fcdab4715d2d904d401d5b0";
+                SharedPreferenceManagerC prefs = new SharedPreferenceManagerC(ct);
+                String scannedKey = prefs.getKeyToSharedPreferencString("key_user");
+                String scannedSecret = prefs.getKeyToSharedPreferencString("key_user_pass");
+                if (scannedKey != null && !scannedKey.isEmpty() && scannedSecret != null && !scannedSecret.isEmpty()) {
+                    apiKey = scannedKey;
+                    apiKeySecret = scannedSecret;
+                }
+
+                long nonce = System.currentTimeMillis();
 
 
                 JSONObject jo = new JSONObject();
