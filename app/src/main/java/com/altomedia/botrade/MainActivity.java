@@ -240,7 +240,8 @@ public class MainActivity extends AppCompatActivity
         recyclerViewNavigationView = navigationView.findViewById(R.id.nav_drawer_recycler_view);
         textViewUpdated = navigationView.findViewById(R.id.textView);
 
-        recyclerViewNavigationView.setHasFixedSize(true);
+        // This list sits inside a NestedScrollView with wrap_content height, so
+        // setHasFixedSize(true) must NOT be used (content height varies).
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewNavigationView.setLayoutManager(layoutManager);
         adapterNavRecyclerView = new AdapterNavRecyclerView(MainActivity.this);
