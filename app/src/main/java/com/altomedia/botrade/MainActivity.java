@@ -100,10 +100,6 @@ public class MainActivity extends AppCompatActivity
 
         intent = new Intent(this, TraderMainService.class);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("BOTRADE");
-            getSupportActionBar().setSubtitle("Bitfinex Auto Trader");
-        }
         fab.setVisibility(View.GONE);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
