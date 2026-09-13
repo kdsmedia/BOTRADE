@@ -129,9 +129,8 @@ public class TraderMainService extends Service {
         }
         @Override
         public void handleMessage(Message msg) {
-            // Normally we would do some work here, like download a file.
-            // For our sample, we just sleep for 5 seconds.
-
+            // Trading loop: fetch live prices from Bitfinex, then re-check
+            // every 10 seconds while the service is enabled.
             while (TraderMainService.this.mServiceHandler != null) {
 
                 try {

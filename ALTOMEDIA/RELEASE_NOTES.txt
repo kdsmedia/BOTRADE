@@ -1,0 +1,44 @@
+============================================================
+ BOTRADE — Release Notes (Catatan Rilis)
+============================================================
+ Package  : com.altomedia.botrade
+ Developer: ALTOMEDIA
+ Contact  : altomediaindonesia@gmail.com
+============================================================
+
+------------------------------------------------------------
+v1.0.0 (13 September 2026)
+------------------------------------------------------------
+Rilis publik pertama BOTRADE.
+
+Fitur:
+- Pemantauan harga pasar real-time (ticker & symbols).
+- Pemeriksaan saldo wallet secara langsung dari bursa.
+- Fitur Enable Trade untuk menjalankan layanan perdagangan
+  otomatis dengan notifikasi foreground service.
+- Manajemen pesanan: buat, lihat, dan batalkan pesanan.
+- Pemindai QR untuk memasukkan API key bursa dengan cepat.
+- 100% API key tersimpan lokal di perangkat pengguna;
+  tidak ada kredensial bawaan (bundled) di dalam APK.
+
+Perbaikan dari versi pengembangan sebelumnya:
+- Memperbaiki crash pada saat aplikasi dibuka (manifest activity).
+- Memperbaiki ikon launcher yang tidak terlihat pada perangkat.
+- Memperbaiki crash pada rilis (release) terkait ProGuard/Retrofit.
+- Menghapus API key bawaan demi keamanan & privasi pengembang.
+- Modernisasi antarmuka pengguna (UI) agar lebih profesional.
+
+Catatan keamanan:
+- Pengguna diwajibkan memindai API key sendiri sebelum
+  menggunakan fitur trading.
+- Pastikan hanya memberikan izin "Order" (bukan "Withdraw")
+  pada API key di bursa.
+
+------------------------------------------------------------
+Cara menambah catatan rilis baru untuk versi berikutnya:
+  1. Bump versionCode & versionName di app/build.gradle
+     (contoh: versionCode 2, versionName "1.0.1").
+  2. Tambahkan blok "v1.0.1 (...)" di atas bagian ini.
+  3. Tempel teks blok ke kolom "Release notes" saat membuat
+     release baru di Play Console dan GitHub.
+============================================================

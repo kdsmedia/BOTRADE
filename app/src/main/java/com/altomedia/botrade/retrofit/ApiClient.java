@@ -59,16 +59,28 @@ public class ApiClient {
 
                 final String ALGORITHM_HMACSHA384 = "HmacSHA384";
 
-                // Default credentials bundled with the app (used when the user has not
-                // scanned a QR code yet). A QR-scanned key overrides these.
-                String apiKey = "5ff4d2450acd5e74e586495cdd0581fbe624dce01f9";
-                String apiKeySecret = "fe12a5fcc14c1dcf5df5fcdab4715d2d904d401d5b0";
+                // No default credentials are bundled with the app. Users must scan
+                // their own Bitfinex API key (QR) before any authenticated call.
+                String apiKey = "";
+                String apiKeySecret = "";
                 SharedPreferenceManagerC prefs = new SharedPreferenceManagerC(ct);
                 String scannedKey = prefs.getKeyToSharedPreferencString("key_user");
                 String scannedSecret = prefs.getKeyToSharedPreferencString("key_user_pass");
                 if (scannedKey != null && !scannedKey.isEmpty() && scannedSecret != null && !scannedSecret.isEmpty()) {
                     apiKey = scannedKey;
                     apiKeySecret = scannedSecret;
+                } else {
+                    // User has not configured their own API key yet. Return a
+                    // 401 response instead of calling Bitfinex with empty creds.
+                    okhttp3.MediaType mediaType = okhttp3.MediaType.parse("application/json; charset=utf-8");
+                    String body = "{\"message\":\"API key not configured. Scan your Bitfinex API key QR first.\"}";
+                    return new okhttp3.Response.Builder()
+                            .code(401)
+                            .message("Unauthorized")
+                            .request(original)
+                            .protocol(okhttp3.Protocol.HTTP_1_1)
+                            .body(okhttp3.ResponseBody.create(mediaType, body))
+                            .build();
                 }
 
                 long nonce = System.currentTimeMillis();

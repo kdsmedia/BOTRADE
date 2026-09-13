@@ -7,3 +7,12 @@
 /build
 /captures
 .externalNativeBuild
+
+# Sensitive: never commit keystores or signing keys
+keystore/
+*.jks
+*.keystore
+*.p12
+
+# Build artifacts (kept under ALTOMEDIA/apk as release deliverables)
+app/build/
