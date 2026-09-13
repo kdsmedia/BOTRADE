@@ -59,7 +59,12 @@ public class AdapterActiveOrder  extends RecyclerView.Adapter<AdapterActiveOrder
                     holder.textViewExecutedAmount.setText(
                             String.valueOf(round(Float.parseFloat(order.getExecutedAmount()), 2))
                     );
-
+                    holder.mainView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+                    if(order.getSide()!=null && order.getSide().equalsIgnoreCase("buy")){
+                        holder.textViewSide.setTextColor(context.getResources().getColor(R.color.text_green));
+                    }else {
+                        holder.textViewSide.setTextColor(context.getResources().getColor(R.color.text_red));
+                    }
                 }catch (Exception exc){
                     exc.printStackTrace();
                 }
@@ -70,6 +75,12 @@ public class AdapterActiveOrder  extends RecyclerView.Adapter<AdapterActiveOrder
             holder.textViewOrginalAmount.setText("Org.A");
             holder.textViewRemainingAmount.setText("Rem.A");
             holder.textViewExecutedAmount.setText("Exe.A");
+            holder.mainView.setBackgroundResource(R.drawable.table_header);
+            holder.textViewSymbol.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewSide.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewOrginalAmount.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewRemainingAmount.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewExecutedAmount.setTextColor(context.getResources().getColor(android.R.color.white));
         }
     }
 
@@ -86,8 +97,10 @@ public class AdapterActiveOrder  extends RecyclerView.Adapter<AdapterActiveOrder
 
     class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView textViewSymbol, textViewSide, textViewOrginalAmount, textViewRemainingAmount,textViewExecutedAmount;
+        View mainView;
         public CustomViewHolder(View itemView) {
             super(itemView);
+            mainView = itemView.findViewById(R.id.mainView);
             textViewSymbol = itemView.findViewById(R.id.textViewSymbol);
             textViewSide = itemView.findViewById(R.id.textViewSide);
             textViewOrginalAmount = itemView.findViewById(R.id.textViewOrginalAmount);

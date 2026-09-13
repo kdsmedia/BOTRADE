@@ -1,13 +1,26 @@
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="6dp">
+
+    <ImageView
+        android:id="@+id/logDot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@null"
+        android:src="@drawable/log_dot" />
+
     <TextView
-        android:layout_margin="2dp"
-        android:textColor="@color/text_primary_dark"
-        android:textSize="11sp"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewLog"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Planet Name"
-        android:id="@+id/textViewLog"/>
+        android:textColor="@color/text_primary_dark"
+        android:textSize="13sp" />
 </LinearLayout>

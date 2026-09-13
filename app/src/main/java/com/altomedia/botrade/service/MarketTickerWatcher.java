@@ -2,6 +2,7 @@ package com.altomedia.botrade.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.altomedia.botrade.MainActivity;
 import com.altomedia.botrade.model.Symbol;
@@ -84,11 +85,19 @@ public class MarketTickerWatcher implements InterfaceAPIManager{
         List<WalletItem> walletItems = (List<WalletItem>) responsesFromServer.get(APIManager.REQUEST_POST_WALLET);
         HashMap<String, SymbolDetails> symbolDetails = (HashMap<String, SymbolDetails>) responsesFromServer.get(APIManager.REQUEST_GET_TICKERS);
 
+        // Guard against missing data sets so the trading loop never crashes the service.
+        if(symbolDetails==null || symbols==null) {
+            cancelCurrentExecution();
+            return;
+        }
 
         Map<String,WalletItem> walletsMap = new HashMap<String,WalletItem>();
         // Only deal with EXChange==============
-        for (WalletItem walletItem : walletItems)
-            if(walletItem.getType().equalsIgnoreCase("exchange"))walletsMap.put(walletItem.getCurrency(),walletItem);
+        if(walletItems!=null) {
+            for (WalletItem walletItem : walletItems)
+                if (walletItem != null && walletItem.getType() != null && walletItem.getType().equalsIgnoreCase("exchange"))
+                    walletsMap.put(walletItem.getCurrency(), walletItem);
+        }
 
         for(String currency : monitorCryptos){
             sentBrodcast("Monitoring currency "+currency, MainActivity.TRADE_RECEIVER_LOGS,KEY_LOGS);
@@ -170,12 +179,18 @@ public class MarketTickerWatcher implements InterfaceAPIManager{
                if( (jsonResult instanceof List) && ((List<Object>) jsonResult).size()> 0 && ((List<ArrayList>) jsonResult).get(0) instanceof List) {
                   symbolDetails = new HashMap<>();
                    for(ArrayList arrayListDetail :  ((List<ArrayList>) jsonResult)){
-                       if(arrayListDetail.get(0).toString().contains("USD")) {
-                           symbolDetails.put(arrayListDetail.get(0).toString(), new SymbolDetails(arrayListDetail.get(0).toString(),
-                                   Float.parseFloat(arrayListDetail.get(1).toString()), Float.parseFloat(arrayListDetail.get(2).toString()), Float.parseFloat(arrayListDetail.get(3).toString()),
-                                   Float.parseFloat(arrayListDetail.get(4).toString()), Float.parseFloat(arrayListDetail.get(5).toString()), Float.parseFloat(arrayListDetail.get(6).toString()),
-                                   Float.parseFloat(arrayListDetail.get(7).toString()), Float.parseFloat(arrayListDetail.get(8).toString()), Float.parseFloat(arrayListDetail.get(9).toString()),
-                                   Float.parseFloat(arrayListDetail.get(10).toString())));
+                       // Guard against malformed/short ticker rows to avoid IndexOutOfBounds.
+                       if(arrayListDetail==null || arrayListDetail.size()<11) continue;
+                       if(arrayListDetail.get(0)!=null && arrayListDetail.get(0).toString().contains("USD")) {
+                           try {
+                               symbolDetails.put(arrayListDetail.get(0).toString(), new SymbolDetails(arrayListDetail.get(0).toString(),
+                                       Float.parseFloat(arrayListDetail.get(1).toString()), Float.parseFloat(arrayListDetail.get(2).toString()), Float.parseFloat(arrayListDetail.get(3).toString()),
+                                       Float.parseFloat(arrayListDetail.get(4).toString()), Float.parseFloat(arrayListDetail.get(5).toString()), Float.parseFloat(arrayListDetail.get(6).toString()),
+                                       Float.parseFloat(arrayListDetail.get(7).toString()), Float.parseFloat(arrayListDetail.get(8).toString()), Float.parseFloat(arrayListDetail.get(9).toString()),
+                                       Float.parseFloat(arrayListDetail.get(10).toString())));
+                           }catch (Exception exc){
+                               Log.e("MarketTickerWatcher","Bad ticker row: "+exc.getMessage());
+                           }
                        }
                    }
                    sentBrodcast(symbolDetails, MainActivity.TRADE_RECEIVER_PRICE,KEY_SYMBOL_DETAILS);

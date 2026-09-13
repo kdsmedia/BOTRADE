@@ -50,7 +50,7 @@ public class AdapterWalletBalance  extends RecyclerView.Adapter<AdapterWalletBal
             if(walletItem!=null){
                 try {
                     holder.textViewCurrency.setText(
-                            walletItem.getCurrency()
+                            walletItem.getCurrency().toUpperCase()
                     );
                     holder.textViewAmount.setText(
                             String.valueOf(round(Float.parseFloat(walletItem.getAmount()), 2))
@@ -59,6 +59,7 @@ public class AdapterWalletBalance  extends RecyclerView.Adapter<AdapterWalletBal
                             String.valueOf(round(Float.parseFloat(walletItem.getAvailable()), 2))
                     );
                     holder.textViewType.setText(walletItem.getType());
+                    holder.mainView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
                 }catch (Exception exc){
                     exc.printStackTrace();
                 }
@@ -68,6 +69,11 @@ public class AdapterWalletBalance  extends RecyclerView.Adapter<AdapterWalletBal
             holder.textViewType.setText("Type");
             holder.textViewAmount.setText("Amount");
             holder.textViewAvailable.setText("Available");
+            holder.mainView.setBackgroundResource(R.drawable.table_header);
+            holder.textViewCurrency.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewType.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewAmount.setTextColor(context.getResources().getColor(android.R.color.white));
+            holder.textViewAvailable.setTextColor(context.getResources().getColor(android.R.color.white));
 
         }
     }
@@ -85,8 +91,10 @@ public class AdapterWalletBalance  extends RecyclerView.Adapter<AdapterWalletBal
 
     class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView textViewCurrency, textViewType, textViewAmount, textViewAvailable;
+        View mainView;
         public CustomViewHolder(View itemView) {
             super(itemView);
+            mainView = itemView.findViewById(R.id.mainView);
             textViewCurrency = itemView.findViewById(R.id.textViewCurrency);
             textViewType = itemView.findViewById(R.id.textViewType);
             textViewAmount = itemView.findViewById(R.id.textViewAmount);

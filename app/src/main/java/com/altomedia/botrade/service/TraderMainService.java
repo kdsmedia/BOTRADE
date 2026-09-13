@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ServiceInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -71,12 +73,23 @@ public class TraderMainService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG,"onStartCommand called");
         Toast.makeText(this, msg==null? "Initializing Robo..." : "Connecting to Robo...", Toast.LENGTH_SHORT).show();
+
+        // Android 8.0+ requires services to be foreground before running long tasks.
+        // Call startForeground with a valid notification to avoid the
+        // ForegroundServiceDidNotStartInTimeException crash.
+        Notification notification = customNotificationManager.buildNotification().build();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(CustomNotificationManager.NOTIFICATION_ID_SERVICE_RUNNER,
+                    notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC);
+        } else {
+            startForeground(CustomNotificationManager.NOTIFICATION_ID_SERVICE_RUNNER, notification);
+        }
+
         // For each start request, send a message to start a job and deliver the
         // start ID so we know which request we're stopping when we finish the job
          msg = mServiceHandler.obtainMessage();
         msg.arg1 = startId;
         mServiceHandler.sendMessage(msg);
-        customNotificationManager.showNotification(CustomNotificationManager.NOTIFICATION_ID_SERVICE_RUNNER);
 
 //        return super.onStartCommand(intent, flags, startId);
     return START_STICKY;

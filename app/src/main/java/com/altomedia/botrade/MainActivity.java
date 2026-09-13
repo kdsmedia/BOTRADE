@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity
     TextView textViewOrder;
     Intent intent;
     TraderReceiver traderReceiver;
+    private boolean qrDialogTriggeredallow = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,10 @@ public class MainActivity extends AppCompatActivity
 
         intent = new Intent(this, TraderMainService.class);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("BOTRADE");
+            getSupportActionBar().setSubtitle("Bitfinex Auto Trader");
+        }
         fab.setVisibility(View.GONE);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -201,8 +206,11 @@ public class MainActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String spinnerCurrentExchange = adapterView.getSelectedItem().toString();
                 String [] exchanges = (getResources().getStringArray(R.array.providers));
-                if (spinnerCurrentExchange.equalsIgnoreCase(exchanges[1])){ //Bitfinex
+                if (exchanges != null && exchanges.length > 1
+                        && spinnerCurrentExchange.equalsIgnoreCase(exchanges[1]) //Bitfinex
+                        && qrDialogTriggeredallow) { //Avoid re-showing on every re-select
 
+                    qrDialogTriggeredallow = false;
                     CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
                     cdd.setCancelable(false);
                     cdd.setExchange(spinnerCurrentExchange);

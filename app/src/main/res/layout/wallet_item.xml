@@ -3,11 +3,13 @@
     android:id="@+id/mainView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     android:orientation="horizontal"
-    android:layout_margin="4dp"
-    android:weightSum="4"
-
-    >
+    android:paddingStart="8dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="10dp"
+    android:weightSum="4">
 
     <TextView
         android:lines="1"

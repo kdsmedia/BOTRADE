@@ -8,7 +8,9 @@ package com.altomedia.botrade.model.activeorders;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ActiveOrder {
+import java.io.Serializable;
+
+public class ActiveOrder implements Serializable {
 
     @SerializedName("id")
     @Expose

@@ -31,7 +31,7 @@ public class CustomNotificationManager {
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
-    private NotificationCompat.Builder buildNotification() {
+    public NotificationCompat.Builder buildNotification() {
         createNotificationChannel();
         return new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_stat_trader) // notification icon

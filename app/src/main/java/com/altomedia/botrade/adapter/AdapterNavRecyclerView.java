@@ -62,15 +62,26 @@ public class AdapterNavRecyclerView extends RecyclerView.Adapter<AdapterNavRecyc
                 }else {
                     holder.textViewPercentage.setTextColor(ContextCompat.getColor(context,R.color.text_red));
                 }
+                holder.mainView.setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
+                holder.textViewPair.setTextColor(ContextCompat.getColor(context,R.color.text_primary_dark));
+                holder.textViewBid.setTextColor(ContextCompat.getColor(context,R.color.text_primary_dark));
+                holder.textViewHigh.setTextColor(ContextCompat.getColor(context,R.color.text_secondary_dark));
+                holder.textViewLow.setTextColor(ContextCompat.getColor(context,R.color.text_secondary_dark));
             }
         }else if (position==0){
-            holder.textViewPercentage.setTextColor(ContextCompat.getColor(context,R.color.text_green));
             holder.textViewPair.setText("Pair(USD)");
             holder.textViewBid.setText("Bid");
             holder.textViewVolume.setText("Volume");
             holder.textViewHigh.setText("High");
             holder.textViewLow.setText("Low");
             holder.textViewPercentage.setText("%");
+            holder.mainView.setBackgroundResource(R.drawable.table_header);
+            holder.textViewPair.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+            holder.textViewBid.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+            holder.textViewVolume.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+            holder.textViewHigh.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+            holder.textViewLow.setTextColor(ContextCompat.getColor(context, android.R.color.white));
+            holder.textViewPercentage.setTextColor(ContextCompat.getColor(context, android.R.color.white));
 
         }
     }
@@ -90,8 +101,10 @@ public class AdapterNavRecyclerView extends RecyclerView.Adapter<AdapterNavRecyc
 
     class CustomViewHolder extends RecyclerView.ViewHolder{
         TextView textViewPair, textViewBid, textViewPercentage, textViewVolume, textViewHigh, textViewLow;
+        View mainView;
         public CustomViewHolder(View itemView) {
             super(itemView);
+            mainView = itemView.findViewById(R.id.mainView);
             textViewPair = itemView.findViewById(R.id.textViewPair);
             textViewBid = itemView.findViewById(R.id.textViewBid);
             textViewPercentage = itemView.findViewById(R.id.textViewPercentage);
