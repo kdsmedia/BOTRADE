@@ -37,7 +37,8 @@
         <service
             android:name=".service.TraderMainService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false"
+            android:foregroundServiceType="dataSync"></service>
     </application>
 
 </manifest>

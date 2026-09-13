@@ -12,6 +12,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="0dp"
         app:elevation="0dp"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -36,11 +37,18 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="48dp"
                 android:text="Enable Trade"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:showText="false"
+                app:thumbTint="#FFFFFF"
+                app:trackTint="#B3FFFFFF" />
 
             <TextView
                 android:id="@+id/textViewExchangeLabel"

@@ -13,6 +13,10 @@
 -dontwarn retrofit2.**
 -dontwarn okhttp3.**
 -dontwarn okio..
+# Keep Retrofit/OkHttp internals so call adapters & converter factories survive R8.
+-keep class retrofit2.** { *; }
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
 -keep class com.altomedia.botrade.model.** { *; }
 -keep class com.altomedia.botrade.retrofit.** { *; }
 
