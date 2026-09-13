@@ -171,14 +171,12 @@ public class MainActivity extends AppCompatActivity
     AdapterWalletBalance adapterWalletBalance;
     AdapterActiveOrder adapterActiveOrder;
     private void setUpMainView() {
-        recyclerViewWalletBalance.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewWalletBalance.setLayoutManager(layoutManager);
         adapterWalletBalance = new AdapterWalletBalance(MainActivity.this);
         recyclerViewWalletBalance.setAdapter(adapterWalletBalance);
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
-        recyclerViewActiveOrders.setHasFixedSize(true);
         recyclerViewActiveOrders.setLayoutManager(layoutManager1);
         adapterActiveOrder = new AdapterActiveOrder(MainActivity.this);
         recyclerViewActiveOrders.setAdapter(adapterActiveOrder);
@@ -259,7 +257,6 @@ public class MainActivity extends AppCompatActivity
         LinearLayout llBottomSheet = findViewById(R.id.bottom_sheet);
         switchAutoscroll = findViewById(R.id.switch2);
         recyclerViewLogs = findViewById(R.id.recyclerViewLogs);
-        recyclerViewLogs.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewLogs.setLayoutManager(layoutManager);
         adapterRoboLogs = new AdapterRoboLogs(MainActivity.this);
